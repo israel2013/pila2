@@ -1,0 +1,72 @@
+<!--templates/detalle_articulo.html-->
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block titulo %} {{ object.titulo }} {% endblock titulo %}
+{% block contenido %}
+
+<div class="article-entry">
+    <h2>{{object.artista}}</h2>
+    <h2>{{object.titulo}}</h2>
+   <h2><div> <a class="btn btn-outline-danger" href="{% url 'lista_articulos_por_genero' genero=object.genero %}">{{object.genero}}</a> 
+
+    {% if object.categoria %}
+  <a class="btn btn-outline-danger"  href="{% url 'lista_articulos_por_categoria' categoria=object.categoria%}">{{object.categoria}}</a>
+   </div> </h2>
+   {% endif %}
+   
+   {% if object.imagen %}
+   <div style="text-align: center;">
+       <img src="{{ object.imagen.url }}" alt="image" style="width: 300px; height: auto;">
+   </div>
+   
+   {% endif %}
+
+
+   <p text-align="center" class="text-light"><h2>{{object.costo}}$</h2></p>
+   <hr>
+    <p text-align="center" class="text-light" font-size=20px >{{object.cuerpo}}</p>
+   <hr>
+    <p text-align="center" class="text-light" >{{object.fecha}}</p>
+    <p text-align="center" class="text-light" >Lanzamiento : {{object.fecha_creacion}}</p>
+
+
+    <div class="article-entry">
+        <h2>Track List del album</h2>
+        <div class="login-container ">
+            <div class="welcome-message bg-dark text-dark">
+              <p>{{object.tracklist}}
+    
+              </p>
+              <nav></nav>
+            </div>
+            
+    
+          </div>
+       
+    </div>
+    
+
+    <p text-align="center" > <a href="{% url 'lista_articulos' %}" class="btn btn-outline-white">Volver</a>
+     {% if user.is_staff %} 
+    <a href="{% url 'editar_articulo' object.pk %}" class="btn btn-outline-white btn-primary">Editar 📝</a>
+    <a href="{% url 'eliminar_articulo' object.pk %}" class="btn btn-outline-white btn-danger">Eliminar❗️</a> </p>
+     {% endif %}</p>
+</div>
+<div>
+<hr>
+    <h4>Agregar un comentario</h4>
+    <form method="post">
+        
+        {% csrf_token %}
+        {{ form|crispy }}       
+    <hr>
+        <button class="btn btn-success ml-2" type="submit">Guardar</button><!--con esto ya añadimos a detalle articulo lo de agregar comentario -->
+    </form>
+
+
+    <h4 > <p text-algin="center">Comentarios</p></h4>
+</div>
+    {% for comentario in object.comentario_set.all %}
+    <p>{{ comentario.autor }} &middot; {{ comentario }}</p>
+    {% endfor %}
+{% endblock contenido %}
