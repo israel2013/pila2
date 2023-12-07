@@ -57,7 +57,7 @@
 </div>
 
 
-{% if user.is_autheticated %}
+{% if user.is_authenticated %}
 <div>
 <hr>
     <h4>Agregar un comentario</h4>
@@ -76,6 +76,6 @@
 
 
     {% for comentario in object.comentario_set.all %}
-    <p>{{ comentario.autor }} &middot; {{ comentario }}</p>
+    <p style="text-align: center; font-size: 16px;">{{ comentario.autor }} &middot; {{ comentario }}</p>
     {% endfor %}
 {% endblock contenido %}

@@ -167,7 +167,8 @@ class ComentarioGet(DetailView):
      template_name='detalle_articulo.html'
      def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
-        context['form']=FormularioComentario
+        #context['form']=FormularioComentario
+        context['form'] = FormularioComentario(usuario_autenticado = self.request.user)
         return context
 
 
@@ -186,6 +187,7 @@ class ComentarioPost(SingleObjectMixin,FormView,View):
         #comentario=self.form_get()
         comentario=form.save(commit=False)
         comentario.Articulo=self.Articulo
+        comentario.autor = self.request.user # establece el autor como el usuario autenticado
         comentario.save()
         return super().form_valid(form)
 
