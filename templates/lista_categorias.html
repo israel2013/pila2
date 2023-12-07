@@ -11,13 +11,22 @@
     <div class="text-center" style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);">
         <h1>!Categorias!</h1>
         <p></p>  <ul>
-    {% for categoria in categorias %}
+ {% for categoria in categorias %}
     {% if categoria %}
         <li>
           <a class="btn btn-outline-dark bg-success" href="{% url 'lista_articulos_por_categoria' categoria=categoria %}">{{ categoria }}</a>
         </li>
     {% endif %}
-{% endfor %}
+{% endfor %} 
+
+
+{% comment %} {% for artista in artistas %}
+    {% if artista %}
+        <li>
+          <a class="btn btn-outline-dark bg-success" href="{% url 'lista_articulos_artista' artista=artista %}">{{ artista }}</a>
+        </li>
+    {% endif %}
+{% endfor %}  {% endcomment %}
 
   </ul>
     </div>

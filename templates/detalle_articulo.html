@@ -8,6 +8,7 @@
     <h2>{{object.artista}}</h2>
     <h2>{{object.titulo}}</h2>
    <h2><div> <a class="btn btn-outline-danger" href="{% url 'lista_articulos_por_genero' genero=object.genero %}">{{object.genero}}</a> 
+   <h2><div> <a class="btn btn-outline-danger" href="{% url 'lista_articulos_artista' artista=object.artista %}">{{object.artista}}</a> 
 
     {% if object.categoria %}
   <a class="btn btn-outline-danger"  href="{% url 'lista_articulos_por_categoria' categoria=object.categoria%}">{{object.categoria}}</a>
@@ -24,7 +25,9 @@
 
    <p text-align="center" class="text-light"><h2>{{object.costo}}$</h2></p>
    <hr>
-    <p text-align="center" class="text-light" font-size=20px >{{object.cuerpo}}</p>
+   <p style="text-align: center; font-size: 16px;" class="text-light">{{ object.cuerpo }}</p>
+
+   {{paypal.render}}
    <hr>
     <p text-align="center" class="text-light" >{{object.fecha}}</p>
     <p text-align="center" class="text-light" >Lanzamiento : {{object.fecha_creacion}}</p>
@@ -34,7 +37,7 @@
         <h2>Track List del album</h2>
         <div class="login-container ">
             <div class="welcome-message bg-dark text-dark">
-              <p>{{object.tracklist}}
+              <p style="text-align: center; font-size: 16px;">{{object.tracklist}}
     
               </p>
               <nav></nav>
@@ -52,6 +55,9 @@
     <a href="{% url 'eliminar_articulo' object.pk %}" class="btn btn-outline-white btn-danger">Eliminar❗️</a> </p>
      {% endif %}</p>
 </div>
+
+
+{% if user.is_autheticated %}
 <div>
 <hr>
     <h4>Agregar un comentario</h4>
@@ -66,6 +72,9 @@
 
     <h4 > <p text-algin="center">Comentarios</p></h4>
 </div>
+{% endif %}
+
+
     {% for comentario in object.comentario_set.all %}
     <p>{{ comentario.autor }} &middot; {{ comentario }}</p>
     {% endfor %}

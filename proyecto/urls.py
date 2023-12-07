@@ -27,6 +27,8 @@ urlpatterns = [
     path('paginas/',   include('paginas.urls')),
     path('cuentas/',include('django.contrib.auth.urls')),
     path('cuentas/', include('cuentas.urls')),
+    path('', include('paypal.standard.ipn.urls')),
+
 
 
     

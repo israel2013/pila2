@@ -24,7 +24,7 @@ class Articulo(models.Model):
         return reverse("detalle_articulo", kwargs={"pk": self.pk})
     
 class Comentario(models.Model):
-    articulo=models.ForeignKey(Articulo,on_delete=models.CASCADE)
+    Articulo=models.ForeignKey(Articulo,on_delete=models.CASCADE)
     comentario=models.CharField(max_length=140)
     autor=models.ForeignKey(
         settings.AUTH_USER_MODEL,

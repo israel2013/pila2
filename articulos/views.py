@@ -9,8 +9,30 @@ from django.views import View #movida
 from django.views.generic.detail import SingleObjectMixin  #nueva
 from .models import Articulo
 from .forms import FormularioComentario
+#from paypal.standard.forms import PayPalPaymetsForm
+from django.conf import settings
+import uuid
+from django.shortcuts import render
 
 # Create your views here.
+
+#lista por artista
+class VistaListaArticulosArtista(ListView):
+    model = Articulo
+    template_name = 'lista_articulos_artista.html'
+    context_object_name = 'articulo_list'
+
+    def get_queryset(self):
+        # Obtén el parámetro de la URL llamado 'genero'
+        artista = self.kwargs.get('artista', None)
+
+        # Filtra los artículos por género si se proporciona el parámetro, de lo contrario, devuelve todos los artículos
+        if artista:
+            return Articulo.objects.filter(artista=artista)
+        else:
+            return Articulo.objects.all()
+
+#lista por genero
 class VistaListaArticulos(ListView):
     model = Articulo
     template_name = 'lista_articulos.html'
@@ -52,11 +74,47 @@ class VistaListaCategorias(ListView):
         context = super().get_context_data(**kwargs)
         context['categorias'] = Articulo.objects.values_list('categoria', flat=True).distinct()
         return context
-    
+# class VistaListaCategoriasArtistas(ListView):
+#     model = Articulo
+#     template_name = 'lista_categorias.html'  # Crea este template
 
+#     def get_context_data2(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['artistas'] = Articulo.objects.values_list('artista', flat=True).distinct()
+#         return context
+    
 class VistaDetalleArticulo(DetailView):
     model = Articulo
     template_name='detalle_articulo.html'
+    def get(self,request,*args,**kwargs):
+        view=ComentarioGet.as_view()
+        return view(request,*args,**kwargs)
+    def post(self,request,*args,**kwargs):
+        view=ComentarioPost.as_view()
+        return view(request,*args,**kwargs)
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     article = self.get_object()
+
+    #     host = self.request.get_host()
+
+    #     paypal_checkout = {
+    #         'business': settings.PAYPAL_RECEIVER_EMAIL,
+    #         'amount': article.costo,
+    #         'item_name': article.titulo,
+    #         'invoice': uuid.uuid4(),
+    #         'currency_code': 'MXN',
+    #         'notify_url': f"http://{host}{reverse('paypal-ipn')}",
+    #         #'return_url': f"http://{host}{reverse_lazy('detalle_articulo')}",
+    #         #'cancel_url': f"http://{host}{reverse('payment-failed', kwargs={'product_id': article.id})}",
+    #     }
+
+    #     paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
+
+    #     context['paypal'] = paypal_payment
+    #     return context
+
+
 
 class VistaModificacionArticulo(UpdateView):
     model=Articulo

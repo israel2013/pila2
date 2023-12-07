@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'cuentas',
+    'paypal.standard.ipn'
     
 ]
 
@@ -171,3 +172,6 @@ LOGIN_REDIRECT_URL = '/articulos'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS='bootstrap5'
 CRISPY_TEMPLATE_PACK='bootstrap5'
+
+PAYPAL_RECEIVER_EMAIL='correopruebas@gmail.com'
+PAYPAL_TEST=True
