@@ -27,7 +27,7 @@
    <hr>
    <p style="text-align: center; font-size: 16px;" class="text-light">{{ object.cuerpo }}</p>
 
-   {{paypal.render}}
+  
    <hr>
     <p text-align="center" class="text-light" >{{object.fecha}}</p>
     <p text-align="center" class="text-light" >Lanzamiento : {{object.fecha_creacion}}</p>
@@ -51,11 +51,51 @@
 
     <p text-align="center" > <a href="{% url 'lista_articulos' %}" class="btn btn-outline-white">Volver</a>
      {% if user.is_staff %} 
-    <a href="{% url 'editar_articulo' object.pk %}" class="btn btn-outline-white btn-primary">Editar 📝</a>
-    <a href="{% url 'eliminar_articulo' object.pk %}" class="btn btn-outline-white btn-danger">Eliminar❗️</a> </p>
+    <a href="{% url 'editar_articulo' object.pk %}" class="btn btn-outline-white btn-primary">Editar</a>
+    <a href="{% url 'eliminar_articulo' object.pk %}" class="btn btn-outline-white btn-danger">Eliminar</a> </p>
      {% endif %}</p>
 </div>
 
+
+{% if user.is_authenticated or user.socialaccount_set.all %}
+<div>
+
+
+   <!--{{ paypal.render }}-->
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AZNkSN0MfQYdRhE_J9vfmAh4Ja1Ritmcu1keaeht0luJRB8O_jBVDFyAQCAXv96rgEk8ocDn6PPcszk5&currency=MXN"></script>
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+            // Call your server to set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            
+                            value: {{object.costo}},
+                            
+                        }
+                    }]
+                });
+            },
+
+            // Call your server to finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+
+                    alert('transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+
+        }).render('#paypal-button-container');
+    </script>
+</div>
+{% endif %}
 
 {% if user.is_authenticated %}
 <div>

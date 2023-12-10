@@ -27,13 +27,17 @@
                     <li><a class="btn btn-outline-light" href="/articulos/">Albums</a></li>
                     <li><a class="btn btn-outline-light" href="/articulos/categorias">Categorías</a></li>
                     {% if user.is_authenticated %}
-                    <li><a class="btn btn-outline-light" href="{% url 'logout' %}">Cerar sesion</a>
-
-
+                    {% if not user.socialaccount_set.all %}
+                        <!-- El usuario está autenticado pero no tiene una cuenta social -->
+                        <li><a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar sesión (sin cuenta social)</a></li>
                     {% else %}
-                    <li><a class="btn btn-outline-light" href="{% url 'login' %}">Iniciar sesion</a>
-
+                        <!-- El usuario está autenticado y tiene una cuenta social -->
+                        <li><a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar sesión (con cuenta social)</a></li>
                     {% endif %}
+                {% else %}
+                    <!-- Contenido para usuarios no autenticados -->
+                    <li><a class="btn btn-outline-light" href="{% url 'login' %}">Iniciar sesión</a></li>
+                {% endif %}
 
 
                     {% comment %} <li><a class="btn btn-outline-light" href="{% url 'signup' %}">Registrarse en el sitio</a> {% endcomment %}

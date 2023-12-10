@@ -98,22 +98,6 @@ class VistaDetalleArticulo(DetailView):
 
     #     host = self.request.get_host()
 
-    #     paypal_checkout = {
-    #         'business': settings.PAYPAL_RECEIVER_EMAIL,
-    #         'amount': article.costo,
-    #         'item_name': article.titulo,
-    #         'invoice': uuid.uuid4(),
-    #         'currency_code': 'MXN',
-    #         'notify_url': f"http://{host}{reverse('paypal-ipn')}",
-    #         #'return_url': f"http://{host}{reverse_lazy('detalle_articulo')}",
-    #         #'cancel_url': f"http://{host}{reverse('payment-failed', kwargs={'product_id': article.id})}",
-    #     }
-
-    #     paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
-
-    #     context['paypal'] = paypal_payment
-    #     return context
-
 
 
 class VistaModificacionArticulo(UpdateView):
