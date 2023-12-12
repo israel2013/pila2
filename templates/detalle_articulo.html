@@ -29,12 +29,12 @@
 
   
    <hr>
-    <p text-align="center" class="text-light" >{{object.fecha}}</p>
-    <p text-align="center" class="text-light" >Lanzamiento : {{object.fecha_creacion}}</p>
+    {% comment %} <p style="text-align: center; font-size: 16px;" >{{object.fecha}}</p> {% endcomment %}
+    <p style="text-align: center; font-size: 16px;" >Lanzamiento : {{object.fecha_creacion}}</p>
 
 
     <div class="article-entry">
-        <h2>Track List del album</h2>
+        <h4>Track List del album</h4>
         <div class="login-container ">
             <div class="welcome-message bg-dark text-dark">
               <p style="text-align: center; font-size: 16px;">{{object.tracklist}}
@@ -58,7 +58,7 @@
 
 
 {% if user.is_authenticated or user.socialaccount_set.all %}
-<div>
+<div class="login-container ">
 
 
    <!--{{ paypal.render }}-->

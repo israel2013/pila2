@@ -111,9 +111,7 @@ class VistaModificacionArticulo(UpdateView):
         'costo',
         'imagen',
         'tracklist',
-        'fecha_creacion',
-
-        
+        'fecha_creacion'
     )
     template_name='editar_articulo.html'
     success_url=reverse_lazy('lista_articulos')
@@ -142,6 +140,7 @@ class VistaCrearArticulo(CreateView):
         
         
         def form_valid(self, form): 
+          #  form.instance.id = uuid.uuid4()
             form.instance.autor = self.request.user
             return super().form_valid(form)
         
