@@ -29,10 +29,10 @@
                     {% if user.is_authenticated %}
                     {% if not user.socialaccount_set.all %}
                         <!-- El usuario está autenticado pero no tiene una cuenta social -->
-                        <li><a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar sesión (sin cuenta social)</a></li>
+                        <li><a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar sesión</a></li>
                     {% else %}
                         <!-- El usuario está autenticado y tiene una cuenta social -->
-                        <li><a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar sesión (con cuenta social)</a></li>
+                        <li><a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar sesión</a></li>
                     {% endif %}
                 {% else %}
                     <!-- Contenido para usuarios no autenticados -->

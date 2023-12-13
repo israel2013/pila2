@@ -17,20 +17,20 @@ from django.shortcuts import render
 # Create your views here.
 
 #lista por artista
-class VistaListaArticulosArtista(ListView):
-    model = Articulo
-    template_name = 'lista_articulos_artista.html'
-    context_object_name = 'articulo_list'
+# class VistaListaArticulosArtista(ListView):
+#     model = Articulo
+#     template_name = 'lista_articulos_artistas.html'
+#     context_object_name = 'articulo_list'
 
-    def get_queryset(self):
-        # Obtén el parámetro de la URL llamado 'genero'
-        artista = self.kwargs.get('artista', None)
+#     def get_queryset(self):
+#         # Obtén el parámetro de la URL llamado 'genero'
+#         artista = self.kwargs.get('artista', None)
 
-        # Filtra los artículos por género si se proporciona el parámetro, de lo contrario, devuelve todos los artículos
-        if artista:
-            return Articulo.objects.filter(artista=artista)
-        else:
-            return Articulo.objects.all()
+#         # Filtra los artículos por género si se proporciona el parámetro, de lo contrario, devuelve todos los artículos
+#         if artista:
+#             return Articulo.objects.filter(artista=artista)
+#         else:
+#             return Articulo.objects.all()
 
 #lista por genero
 class VistaListaArticulos(ListView):
