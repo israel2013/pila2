@@ -1,6 +1,8 @@
 from django.views.generic import ListView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
-
+#from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import UpdateView, DeleteView,CreateView,FormView
 from .models import Articulo
 from django.urls import reverse_lazy,reverse #modificada
@@ -31,6 +33,9 @@ from django.shortcuts import render
 #             return Articulo.objects.filter(artista=artista)
 #         else:
 #             return Articulo.objects.all()
+def es_administrador(user):
+    return user.is_authenticated and user.is_staff
+
 
 #lista por genero
 class VistaListaArticulos(ListView):
@@ -99,7 +104,7 @@ class VistaDetalleArticulo(DetailView):
     #     host = self.request.get_host()
 
 
-
+@method_decorator(user_passes_test(es_administrador), name='dispatch')
 class VistaModificacionArticulo(UpdateView):
     model=Articulo
     fields=(
@@ -116,12 +121,13 @@ class VistaModificacionArticulo(UpdateView):
     template_name='editar_articulo.html'
     success_url=reverse_lazy('lista_articulos')
 
+@method_decorator(user_passes_test(es_administrador), name='dispatch')
 class VistaEliminacionArticulo(DeleteView): 
     model = Articulo
     template_name= 'eliminar_articulo.html'
     success_url=reverse_lazy('lista_articulos')
     object_name = 'articulo'
-
+@method_decorator(user_passes_test(es_administrador), name='dispatch')
 class VistaCrearArticulo(CreateView):
         model=Articulo
         template_name='nuevo_articulo.html'
@@ -144,7 +150,7 @@ class VistaCrearArticulo(CreateView):
             form.instance.autor = self.request.user
             return super().form_valid(form)
         
-    
+#@method_decorator(login_required, name='dispatch')
 class ComentarioGet(DetailView):
      model=Articulo
      template_name='detalle_articulo.html'
@@ -155,7 +161,7 @@ class ComentarioGet(DetailView):
         return context
 
 
-
+#@method_decorator(login_required, name='dispatch')
 class ComentarioPost(SingleObjectMixin,FormView,View):
     model=Articulo
     form_class = FormularioComentario
