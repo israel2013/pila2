@@ -29,7 +29,7 @@ db.sqlite3
 # proyecto/
 
 # Otros archivos específicos de tu proyecto
-manage.py
+#manage.py
 # requerimientos.txt
 
 # Carpeta de plantillas (puede variar según tu configuración)
